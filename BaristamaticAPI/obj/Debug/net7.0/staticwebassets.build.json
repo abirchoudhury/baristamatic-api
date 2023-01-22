@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "p2IuErU3tzlS2FpC6bWyXstXos4nXNWoTwG6e8lhx0Q=",
+  "Source": "BaristamaticAPI",
+  "BasePath": "_content/BaristamaticAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
