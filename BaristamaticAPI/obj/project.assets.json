@@ -11060,11 +11060,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\CloudRepos\\Baristamatic\\BaristamaticAPI\\BaristamaticAPI\\BaristamaticAPI.csproj",
+      "projectUniqueName": "C:\\Users\\beerw\\Source\\Repos\\abirchoudhury\\baristamatic-api\\BaristamaticAPI\\BaristamaticAPI.csproj",
       "projectName": "BaristamaticAPI",
-      "projectPath": "C:\\CloudRepos\\Baristamatic\\BaristamaticAPI\\BaristamaticAPI\\BaristamaticAPI.csproj",
+      "projectPath": "C:\\Users\\beerw\\Source\\Repos\\abirchoudhury\\baristamatic-api\\BaristamaticAPI\\BaristamaticAPI.csproj",
       "packagesPath": "C:\\Users\\beerw\\.nuget\\packages\\",
-      "outputPath": "C:\\CloudRepos\\Baristamatic\\BaristamaticAPI\\BaristamaticAPI\\obj\\",
+      "outputPath": "C:\\Users\\beerw\\Source\\Repos\\abirchoudhury\\baristamatic-api\\BaristamaticAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BaristamaticAPI.Models;
 using BaristamaticAPI.Services;
-using Order = BaristamaticAPI.Models.OrderResponseModel;
 namespace BaristamaticAPI.Controllers
 {
 	[Route("api/[controller]")]
@@ -26,7 +25,7 @@ namespace BaristamaticAPI.Controllers
 		// GET: api/DrinksOrder
 		[HttpGet]
 		[Route("GetAllOrders")]
-		public async Task<ActionResult<IEnumerable<Order>>> GetDrinkOrders()
+		public async Task<ActionResult<IEnumerable<OrderResponseModel>>> GetDrinkOrders()
 		{
 			if (_context.DrinksOrder == null)
 			{
@@ -37,7 +36,7 @@ namespace BaristamaticAPI.Controllers
 
 		// GET: api/DrinksOrder/5
 		[HttpGet("{id}")]
-		public async Task<ActionResult<Order>> GetDrinksOrder(int id)
+		public async Task<ActionResult<OrderResponseModel>> GetDrinksOrder(int id)
 		{
 			if (_context.DrinksOrder == null)
 			{
@@ -54,8 +53,8 @@ namespace BaristamaticAPI.Controllers
 		}
 
 		[HttpPost]
-		[Route("PlaceOrder")]
-		public async Task<ActionResult<OrderRequestModel>> PlaceDrinksOrder(OrderRequestModel drinksOrder)
+		[Route("PlaceDrinksOrder")]
+		public async Task<ActionResult<OrderResponseModel>> PlaceDrinksOrder(OrderRequestModel drinksOrder)
 		{
 			if (_context.DrinksOrder == null)
 			{
@@ -64,7 +63,7 @@ namespace BaristamaticAPI.Controllers
 			bool result = await _orderService.PlaceOrder(drinksOrder);
 			if (result)
 			{
-				return CreatedAtAction("PlaceOrder", new { id = drinksOrder.Id }, drinksOrder);
+				return CreatedAtAction("PlaceDrinksOrder", new { id = drinksOrder.Id }, drinksOrder);
 			}
 			else
 			{
@@ -77,7 +76,7 @@ namespace BaristamaticAPI.Controllers
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 		[HttpPut("{id}")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public async Task<IActionResult> PutDrinksOrder(int id, Order drinksOrder)
+		public async Task<IActionResult> PutDrinksOrder(int id, OrderResponseModel drinksOrder)
 		{
 			if (id != drinksOrder.Id)
 			{

@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.ComponentModel;
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace BaristamaticAPI.Models
@@ -7,12 +8,13 @@ namespace BaristamaticAPI.Models
 	{
 		public OrderRequestModel()
 		{
-			this.Id = (int)this.DrinkName;
+			this.Id = (int)this.DrinkName;			
 		}
-		public int Id { get; private set; }
+		public int Id { get; set; }
 		[JsonConverter(typeof(JsonStringEnumConverter))]
 		public DrinkNames DrinkName { get; set; }
-		public bool? Decaf { get; set; }
+		[DefaultValue(false)]
+		public bool Decaf { get; set; }
 	}
 
 	public enum DrinkNames

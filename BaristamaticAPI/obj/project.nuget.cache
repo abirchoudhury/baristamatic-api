@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "alUO+i0Icgfs03oZows0TMqCWdpyOoA/yaElVcOib4ZHX2cB92IMDWpGz9rFdSlGc7gsGpiLEL2AD2bSASuwbw==",
+  "dgSpecHash": "6+ek+V66KtBOyQVYR6ZM71oNdkZUWbEeNDeneYSvNVYAtqRXDoZeKbfxOxnZ7rs6O8mFszGLLz4A8UzlbeTkTw==",
   "success": true,
-  "projectFilePath": "C:\\CloudRepos\\Baristamatic\\BaristamaticAPI\\BaristamaticAPI\\BaristamaticAPI.csproj",
+  "projectFilePath": "C:\\Users\\beerw\\Source\\Repos\\abirchoudhury\\baristamatic-api\\BaristamaticAPI\\BaristamaticAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\beerw\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\beerw\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

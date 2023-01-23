@@ -29,7 +29,7 @@ namespace BaristamaticAPI.Services
 			}
 
 			//order placed, get the recipe for drink in order
-			DrinkRecipe recipe = GetRecipe(order.Id);
+			DrinkRecipe recipe = GetRecipe(order.DrinkName);
 			double totalCost = 0;
 
 			//recipe found, loop thru ingredients
@@ -49,7 +49,7 @@ namespace BaristamaticAPI.Services
 						//match found, check if ingredient in stock
 						if (dbIng.Quantity <= 0 || dbIng.Quantity < recIng.Quantity)
 						{
-							throw new InvalidOperationException();
+							throw new InvalidOperationException($"Ingredient out of stock. Ingredient:{dbIng.IngredientName}");
 						}
 
 						//in stock, subtract the quantity used
@@ -119,18 +119,19 @@ namespace BaristamaticAPI.Services
 		}
 
 		/// <summary>
-		/// Determines the ingredients required for a drink. For demo purposes, this is being hard coded.
-		/// A better approach would be to create a one-to-may schema to maintain drinks and their required ingredients
+		/// Determines the ingredients required for a drink. For demo purposes, this is being hard coded.		
 		/// </summary>
 		/// <param name="drinkID"></param>
 		/// <returns>The name and list of ingredients for the specified drink</returns>
-		public DrinkRecipe GetRecipe(int drinkID)
+		public DrinkRecipe GetRecipe(DrinkNames drinkName)
 		{
-			var result = new DrinkRecipe();
-			result.Ingredients = new List<Ingredient>();
-			switch (drinkID)
+			var result = new DrinkRecipe
 			{
-				case 1:
+				Ingredients = new List<Ingredient>()
+			};
+			switch (drinkName)
+			{
+				case DrinkNames.Coffee:
 					result.DrinkName = "Coffee";
 					result.Ingredients?.AddRange(new List<Ingredient>
 					{
@@ -151,8 +152,7 @@ namespace BaristamaticAPI.Services
 						}
 					});
 					break;
-
-				case 2:
+				case DrinkNames.DecafCoffee:
 					result.DrinkName = "Decaf Coffee";
 					result.Ingredients?.AddRange(new List<Ingredient>
 					{
@@ -173,7 +173,7 @@ namespace BaristamaticAPI.Services
 						}
 					});
 					break;
-				case 3:
+				case DrinkNames.CaffeLatte:
 					result.DrinkName = "Caffee Latte";
 					result.Ingredients?.AddRange(new List<Ingredient>
 					{
@@ -189,8 +189,7 @@ namespace BaristamaticAPI.Services
 						}
 					});
 					break;
-
-				case 4:
+				case DrinkNames.CaffeAmericano:
 					result.DrinkName = "Caffe Americano";
 					result.Ingredients?.AddRange(new List<Ingredient>
 					{
@@ -201,7 +200,7 @@ namespace BaristamaticAPI.Services
 						}
 					});
 					break;
-				case 5:
+				case DrinkNames.CaffeMocha:
 					result.DrinkName = "Caffe Mocha";
 					result.Ingredients?.AddRange(new List<Ingredient>
 					{
@@ -227,7 +226,7 @@ namespace BaristamaticAPI.Services
 						}
 					});
 					break;
-				case 6:
+				case DrinkNames.Cappuccino:
 					result.DrinkName = "Cappuccino";
 					result.Ingredients?.AddRange(new List<Ingredient>
 					{
@@ -247,9 +246,7 @@ namespace BaristamaticAPI.Services
 							Quantity = 1
 						}
 					});
-					break;
-				default:
-					break;
+					break;				
 			}
 			return result;
 		}
