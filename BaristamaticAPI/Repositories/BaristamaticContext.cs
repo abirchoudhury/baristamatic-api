@@ -1,9 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-using Orders = BaristamaticAPI.Models.OrderResponseModel;
-
-
-
 namespace BaristamaticAPI.Models
 {
 	public class BaristamaticContext : DbContext
@@ -12,7 +8,7 @@ namespace BaristamaticAPI.Models
 		{			
 		}
 		public DbSet<BaristamaticDrink> DrinksMenu { get; set; }
-		public DbSet<Orders> DrinksOrder { get; set; }
+		public DbSet<OrderResponseModel> DrinksOrder { get; set; }
 		public DbSet<Ingredient> Ingredients { get; set; }
 
 		public void RestoreIngredients()
@@ -23,63 +19,63 @@ namespace BaristamaticAPI.Models
 				{
 					IngredientID = 1,
 					IngredientName = "Coffee",
-					UnitCost = 0.75,
+					UnitCost = 0.75M,
 					Quantity = 10
 				},
 				new Ingredient
 				{
 					IngredientID = 2,
 					IngredientName = "Decaf Coffee",
-					UnitCost = 0.75,
+					UnitCost = 0.75M,
 					Quantity = 10
 				},
 				new Ingredient
 				{
 					IngredientID = 3,
 					IngredientName = "Sugar",
-					UnitCost = 0.25,
+					UnitCost = 0.25M,
 					Quantity = 10
 				},
 				new Ingredient
 				{
 					IngredientID = 4,
 					IngredientName = "Cream",
-					UnitCost = 0.25,
+					UnitCost = 0.25M,
 					Quantity = 10
 				},
 				new Ingredient
 				{
 					IngredientID = 5,
 					IngredientName = "Steamed Milk",
-					UnitCost = 0.35,
+					UnitCost = 0.35M,
 					Quantity = 10
 				},
 				new Ingredient
 				{
 					IngredientID = 6,
 					IngredientName = "Foamed Milk",
-					UnitCost = 0.35,
+					UnitCost = 0.35M,
 					Quantity = 10
 				},
 				new Ingredient
 				{
 					IngredientID = 7,
 					IngredientName = "Espresso",
-					UnitCost = 1.10,
+					UnitCost = 1.10M,
 					Quantity = 10
 				},
 				new Ingredient
 				{
 					IngredientID = 8,
 					IngredientName = "Cocoa",
-					UnitCost = 0.90,
+					UnitCost = 0.90M,
 					Quantity = 10
 				},
 				new Ingredient
 				{
 					IngredientID = 9,
 					IngredientName = "Whipped Cream",
-					UnitCost = 1.00,
+					UnitCost = 1.00M,
 					Quantity = 10
 				}
 			};

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BaristamaticAPI.Models;
 using BaristamaticAPI.Services;
+using System.Globalization;
+
 namespace BaristamaticAPI.Controllers
 {
 	[Route("api/[controller]")]
@@ -29,49 +31,60 @@ namespace BaristamaticAPI.Controllers
 		{
 			if (_context.DrinksOrder == null)
 			{
-				return NotFound();
+				//return NotFound();
+				return Problem("There was a problem with the database");
 			}
-			return await _context.DrinksOrder.ToListAsync();
-		}
-
-		// GET: api/DrinksOrder/5
-		[HttpGet("{id}")]
-		public async Task<ActionResult<OrderResponseModel>> GetDrinksOrder(int id)
-		{
-			if (_context.DrinksOrder == null)
+			var response = await _context.DrinksOrder.ToListAsync();
+			if (response == null)
 			{
-				return NotFound();
+				return NoContent();
 			}
-			var drinksOrder = await _context.DrinksOrder.FindAsync(id);
-
-			if (drinksOrder == null)
+			else
 			{
-				return NotFound();
-			}
+				foreach (var order in response)
+				{
+					order.OrderDateFormatted = order.OrderDate.ToString("MM/dd/yyyy hh:mm tt");
+					order.TotalCostFormatted = order.OrderTotal.ToString("C", CultureInfo.CurrentCulture);
+				}
 
-			return drinksOrder;
+				return response;
+			}
 		}
 
 		[HttpPost]
 		[Route("PlaceDrinksOrder")]
 		public async Task<ActionResult<OrderResponseModel>> PlaceDrinksOrder(OrderRequestModel drinksOrder)
 		{
+			OrderResponseModel response;
 			if (_context.DrinksOrder == null)
 			{
 				return Problem("Entity set 'DrinksOrderContext.DrinkOrders'  is null.");
 			}
-			bool result = await _orderService.PlaceOrder(drinksOrder);
-			if (result)
+			try
 			{
-				return CreatedAtAction("PlaceDrinksOrder", new { id = drinksOrder.Id }, drinksOrder);
+				response = await _orderService.PlaceOrder(drinksOrder);
+				if (response != null)
+				{
+					response.OrderDateFormatted = response.OrderDate.ToString("MM/dd/yyyy hh:mm tt");
+					response.TotalCostFormatted = response.OrderTotal.ToString("C", CultureInfo.CurrentCulture);
+
+					return CreatedAtAction("PlaceDrinksOrder", new { id = response.Id }, response);
+				}
+				else
+				{
+					return Problem("Failed to place order, unkown error occurred.");
+				}
 			}
-			else
+			catch (Exception ex)
 			{
-				return Problem("Failed to place order, unkown error occurred.");
+				return Problem(ex.Message);
 			}
-			
+
+
+
 		}
 
+		#region IgnoredAPIs
 		// PUT: api/DrinksOrder/5
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 		[HttpPut("{id}")]
@@ -101,10 +114,10 @@ namespace BaristamaticAPI.Controllers
 				}
 			}
 
-			return NoContent();
+			return Ok("Order updated successfully");
 		}
 
-		
+
 
 		// DELETE: api/DrinksOrder/5
 		[HttpDelete("{id}")]
@@ -124,8 +137,9 @@ namespace BaristamaticAPI.Controllers
 			_context.DrinksOrder.Remove(drinksOrder);
 			await _context.SaveChangesAsync();
 
-			return NoContent();
+			return Ok($"Deleted Order with ID:{id}");
 		}
+		#endregion
 
 		private bool DrinksOrderExists(int id)
 		{

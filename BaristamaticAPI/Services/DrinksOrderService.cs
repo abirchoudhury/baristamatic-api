@@ -1,9 +1,5 @@
 ﻿using BaristamaticAPI.Models;
 
-using Microsoft.EntityFrameworkCore;
-
-using System.Text.RegularExpressions;
-
 namespace BaristamaticAPI.Services
 {
 	public class DrinksOrderService : IDrinksOrderService
@@ -18,66 +14,66 @@ namespace BaristamaticAPI.Services
 		/// Place an order, update ingredient quantities used, save changes to DB.
 		/// </summary>
 		/// <param name="order"></param>
-		/// <returns>True for a successful order, otherwise False </returns>
+		/// <returns>The order created</returns>
 		/// <exception cref="InvalidOperationException">Thrown when not enough quantity available for order</exception>	
-		public async Task<bool> PlaceOrder(OrderRequestModel order)
+		public async Task<OrderResponseModel> PlaceOrder(OrderRequestModel order)
 		{
 			//validate request
 			if (!ValidateRequest(order))
 			{
-				return false;
+				throw new ArgumentException("Invalid request model", nameof(order));
 			}
 
+			var response = new OrderResponseModel();
 			//order placed, get the recipe for drink in order
 			DrinkRecipe recipe = GetRecipe(order.DrinkName);
-			double totalCost = 0;
+			decimal totalCost = 0.00M;
 
 			//recipe found, loop thru ingredients
-			if (recipe != null && recipe.Ingredients != null)
+			if (recipe != null && recipe.RecipeIngredients != null)
 			{
 				//if no ingredients then restore them. This should only happen the first time during app lifecycle
 				if (!_context.Ingredients.Any())
 				{
 					_context.RestoreIngredients();
 				}
-				foreach (var recIng in recipe.Ingredients)
+				foreach (var recIng in recipe.RecipeIngredients)
 				{
 					//find matching ingredient by name
 					var dbIng = _context.Ingredients.FirstOrDefault(a => a.IngredientName == recIng.IngredientName);
 					if (dbIng != null)
 					{
 						//match found, check if ingredient in stock
-						if (dbIng.Quantity <= 0 || dbIng.Quantity < recIng.Quantity)
+						if (dbIng.Quantity <= 0 || dbIng.Quantity < recIng.RequiredQuantity)
 						{
 							throw new InvalidOperationException($"Ingredient out of stock. Ingredient:{dbIng.IngredientName}");
 						}
 
 						//in stock, subtract the quantity used
-						dbIng.Quantity -= recIng.Quantity;
+						dbIng.Quantity -= recIng.RequiredQuantity;
 
-						//update ingredients in db
+						//update ingredients in db						
 						_context.Ingredients.Update(dbIng);
 
 						//ingredients updated, determine cost
-						totalCost += dbIng.UnitCost * recIng.Quantity;
+						totalCost += dbIng.UnitCost * recIng.RequiredQuantity;
 					}
 				}
 				//create the order
-				var response = new OrderResponseModel
+				response = new OrderResponseModel
 				{
 					Id = order.Id,
-					DrinkName = GetDrinkName(order.DrinkName),
-					Ingredients = recipe.Ingredients,
+					DrinkName = GetDrinkName(order.DrinkName),					
 					Decaf = order.Decaf,
-					OrderTotal = totalCost
+					OrderTotal = totalCost,
+					OrderDate = DateTime.Now,
+					UTCOrderDate = DateTime.UtcNow					
 				};
 
 				_context.DrinksOrder.Add(response);
-				await _context.SaveChangesAsync();
-
-				return true;
+				await _context.SaveChangesAsync();				
 			}
-			return false;
+			return response;
 		}
 
 		public string GetDrinkName(DrinkNames id)
@@ -127,123 +123,123 @@ namespace BaristamaticAPI.Services
 		{
 			var result = new DrinkRecipe
 			{
-				Ingredients = new List<Ingredient>()
+				RecipeIngredients = new List<RecipeIngredient>()
 			};
 			switch (drinkName)
 			{
 				case DrinkNames.Coffee:
 					result.DrinkName = "Coffee";
-					result.Ingredients?.AddRange(new List<Ingredient>
+					result.RecipeIngredients?.AddRange(new List<RecipeIngredient>
 					{
-						new Ingredient
+						new RecipeIngredient
 						{
 							IngredientName = "Coffee",
-							Quantity = 3
+							RequiredQuantity = 3
 						},
-						new Ingredient
+						new RecipeIngredient
 						{
 							IngredientName = "Sugar",
-							Quantity = 1
+							RequiredQuantity = 1
 						},
-						new Ingredient
+						new RecipeIngredient
 						{
 							IngredientName = "Cream",
-							Quantity = 1
+							RequiredQuantity = 1
 						}
 					});
 					break;
 				case DrinkNames.DecafCoffee:
 					result.DrinkName = "Decaf Coffee";
-					result.Ingredients?.AddRange(new List<Ingredient>
+					result.RecipeIngredients?.AddRange(new List<RecipeIngredient>
 					{
-						new Ingredient
+						new RecipeIngredient
 						{
 							IngredientName = "Decaf Coffee",
-							Quantity = 3
+							RequiredQuantity = 3
 						},
-						new Ingredient
+						new RecipeIngredient
 						{
 							IngredientName = "Sugar",
-							Quantity = 1
+							RequiredQuantity = 1
 						},
-						new Ingredient
+						new RecipeIngredient
 						{
 							IngredientName = "Cream",
-							Quantity = 1
+							RequiredQuantity = 1
 						}
 					});
 					break;
 				case DrinkNames.CaffeLatte:
 					result.DrinkName = "Caffee Latte";
-					result.Ingredients?.AddRange(new List<Ingredient>
+					result.RecipeIngredients?.AddRange(new List<RecipeIngredient>
 					{
-						new Ingredient
+						new RecipeIngredient
 						{
 							IngredientName = "Espresso",
-							Quantity = 2
+							RequiredQuantity = 2
 						},
-						new Ingredient
+						new RecipeIngredient
 						{
 							IngredientName = "Steamed Milk",
-							Quantity = 1
+							RequiredQuantity = 1
 						}
 					});
 					break;
 				case DrinkNames.CaffeAmericano:
 					result.DrinkName = "Caffe Americano";
-					result.Ingredients?.AddRange(new List<Ingredient>
+					result.RecipeIngredients?.AddRange(new List<RecipeIngredient>
 					{
-						new Ingredient
+						new RecipeIngredient
 						{
 							IngredientName = "Espresso",
-							Quantity = 3
+							RequiredQuantity = 3
 						}
 					});
 					break;
 				case DrinkNames.CaffeMocha:
 					result.DrinkName = "Caffe Mocha";
-					result.Ingredients?.AddRange(new List<Ingredient>
+					result.RecipeIngredients?.AddRange(new List<RecipeIngredient>
 					{
-						new Ingredient
+						new RecipeIngredient
 						{
 							IngredientName = "Espresso",
-							Quantity = 1
+							RequiredQuantity = 1
 						},
-						new Ingredient
+						new RecipeIngredient
 						{
 							IngredientName = "Cocoa",
-							Quantity = 1
+							RequiredQuantity = 1
 						},
-						new Ingredient
+						new RecipeIngredient
 						{
 							IngredientName = "Steamed Milk",
-							Quantity = 1
+							RequiredQuantity = 1
 						},
-						new Ingredient
+						new RecipeIngredient
 						{
 							IngredientName = "Whipped Cream",
-							Quantity = 1
+							RequiredQuantity = 1
 						}
 					});
 					break;
 				case DrinkNames.Cappuccino:
 					result.DrinkName = "Cappuccino";
-					result.Ingredients?.AddRange(new List<Ingredient>
+					result.RecipeIngredients?.AddRange(new List<RecipeIngredient>
 					{
-						new Ingredient
+						new RecipeIngredient
 						{
 							IngredientName = "Espresso",
-							Quantity = 2
+							RequiredQuantity = 2
 						},
-						new Ingredient
+						new RecipeIngredient
 						{
 							IngredientName = "Steamed Milk",
-							Quantity = 1
+							RequiredQuantity = 1
 						},
-						new Ingredient
+						new RecipeIngredient
 						{
 							IngredientName = "Foamed Milk",
-							Quantity = 1
+							RequiredQuantity = 1
 						}
 					});
 					break;				

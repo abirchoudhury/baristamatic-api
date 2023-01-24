@@ -2,8 +2,13 @@
   "ExpandedNodes": [
     "",
     "\\BaristamaticAPI",
-    "\\BaristamaticAPI\\Controllers"
+    "\\BaristamaticAPI\\Controllers",
+    "\\BaristamaticAPI\\Models",
+    "\\BaristamaticAPI\\Properties",
+    "\\BaristamaticAPI\\Repositories",
+    "\\BaristamaticAPI\\Services",
+    "\\BaristamaticAPI\\Services\\Interfaces"
   ],
-  "SelectedNode": "\\Baristamatic.sln",
+  "SelectedNode": "\\BaristamaticAPI\\Controllers\\DrinksOrderController.cs",
   "PreviewInSolutionExplorer": false
 }

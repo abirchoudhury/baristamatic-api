@@ -4,6 +4,6 @@ namespace BaristamaticAPI.Services
 {
 	public interface IDrinksOrderService
 	{
-		public Task<bool> PlaceOrder(OrderRequestModel order);
+		public Task<OrderResponseModel> PlaceOrder(OrderRequestModel order);
 	}
 }

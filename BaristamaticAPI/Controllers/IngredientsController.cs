@@ -21,7 +21,10 @@ namespace BaristamaticAPI.Controllers
 		{
 			_context = context;
 			_ingredientsService = new IngredientsService(context);
-			_context.RestoreIngredients();
+			if (!_context.Ingredients.Any())
+			{
+				_context.RestoreIngredients();
+			}			
 		}
 
 		// GET: api/Ingredients
@@ -31,10 +34,17 @@ namespace BaristamaticAPI.Controllers
 		{
 			if (_context.Ingredients == null)
 			{
-				return NotFound();
+				return Problem("There was a problem with the database");
 			}
-			
-			return await _context.Ingredients.ToListAsync();
+			var response = await _context.Ingredients.ToListAsync();
+			if (response == null)
+			{
+				return Problem("There was a problem with the database, no ingredients foundl.");
+			}
+			else
+			{
+				return response;
+			}
 		}
 
 		[HttpPost]
@@ -42,9 +52,10 @@ namespace BaristamaticAPI.Controllers
 		public JsonResult RestockIngredients()
 		{
 			_ingredientsService.RestockIngredients();
-			return new JsonResult(Ok());
+			return new JsonResult(Ok("Ingredients restocked successfully"));
 		}
 
+		#region IgnoredApis
 		// GET: api/Ingredients/5
 		[HttpGet("{id}")]
 		[ApiExplorerSettings(IgnoreApi = true)]
@@ -64,36 +75,7 @@ namespace BaristamaticAPI.Controllers
 			return ingredient;
 		}
 
-		// PUT: api/Ingredients/5
-		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-		[HttpPut("{id}")]		
-		public async Task<IActionResult> PutIngredient(int id, Ingredient ingredient)
-		{
-			if (id != ingredient.IngredientID)
-			{
-				return BadRequest();
-			}
-
-			_context.Entry(ingredient).State = EntityState.Modified;
-
-			try
-			{
-				await _context.SaveChangesAsync();
-			}
-			catch (DbUpdateConcurrencyException)
-			{
-				if (!IngredientExists(id))
-				{
-					return NotFound();
-				}
-				else
-				{
-					throw;
-				}
-			}
-
-			return NoContent();
-		}
+		
 
 		// POST: api/Ingredients
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -131,6 +113,7 @@ namespace BaristamaticAPI.Controllers
 
 			return NoContent();
 		}
+		#endregion
 
 		private bool IngredientExists(int id)
 		{

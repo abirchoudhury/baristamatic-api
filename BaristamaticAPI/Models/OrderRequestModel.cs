@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
@@ -6,10 +7,8 @@ namespace BaristamaticAPI.Models
 {
 	public class OrderRequestModel
 	{
-		public OrderRequestModel()
-		{
-			this.Id = (int)this.DrinkName;			
-		}
+		[Key]
+		[JsonIgnore]
 		public int Id { get; set; }
 		[JsonConverter(typeof(JsonStringEnumConverter))]
 		public DrinkNames DrinkName { get; set; }
