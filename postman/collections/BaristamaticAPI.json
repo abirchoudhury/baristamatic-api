@@ -104,16 +104,7 @@
 											"pm.test(\"Successful POST request\", function () {\r",
 											"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
 											"});\r",
-											"\r",
-											"pm.test(\"Successfully order a Decaf Coffee\", function () {\r",
-											"    \r",
-											"    pm.expect(pm.request.body.raw.drinkName).to.be.a(\"DecafCoffee\").pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Successfully order a Caffe Latte\", function () {\r",
-											"    console.debug(pm.request.body)\r",
-											"    pm.expect(pm.request.body.raw.drinkName).to.be.a(\"CaffeLatte\").pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
-											"});"
+											""
 										],
 										"type": "text/javascript"
 									}
@@ -296,6 +287,23 @@
 						},
 						{
 							"name": "/api/Ingredients/RestoreIngredients",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ee456c1b-35e5-49f5-87cb-b6ad1196c861",
+										"exec": [
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+											"});\r",
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"id": "885650c1-91a3-412b-ae64-15a9b3694daa",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
@@ -353,6 +361,23 @@
 				},
 				{
 					"name": "/api/AvailableDrinks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "80899ce6-f31d-48c6-8ad1-307a99faace8",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"id": "010f1842-fd2c-4052-a62d-8fca1e63fe6a",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -415,6 +440,24 @@
 				},
 				{
 					"name": "/api/BaristamaticMenu/GetDrinksMenu",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "90047453-4070-458d-81f2-0a6eaf506933",
+								"exec": [
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"id": "b4cd11c3-429f-4bcb-9657-7a30ef9efb5a",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
