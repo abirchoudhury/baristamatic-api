@@ -14,6 +14,23 @@
 					"item": [
 						{
 							"name": "/api/DrinksOrder/GetAllOrders",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f87b762f-3753-4ffc-a744-8f1b24126800",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+											"});\r",
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"id": "1f882835-82fe-499d-8107-a2548972568d",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
@@ -78,6 +95,30 @@
 						},
 						{
 							"name": "/api/DrinksOrder/PlaceDrinksOrder",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5e2d4e8e-64a6-49fa-8912-7b2966f7358c",
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Successfully order a Decaf Coffee\", function () {\r",
+											"    \r",
+											"    pm.expect(pm.request.body.raw.drinkName).to.be.a(\"DecafCoffee\").pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Successfully order a Caffe Latte\", function () {\r",
+											"    console.debug(pm.request.body)\r",
+											"    pm.expect(pm.request.body.raw.drinkName).to.be.a(\"CaffeLatte\").pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"id": "2780a2e4-a49b-44c3-ad12-210f0ee9e3b9",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
@@ -174,6 +215,23 @@
 					"item": [
 						{
 							"name": "/api/Ingredients/GetCurrentStock",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "de50722d-c18d-4507-8db3-46b1970aea44",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"id": "bc3928cb-b8e2-4132-b457-4646128920f1",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
@@ -423,11 +481,33 @@
 			"id": "ff1d67a2-fead-4129-b094-6df52ae275e2"
 		}
 	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "cbcfd4f5-0650-4288-a809-1d06acf53d9f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "929bf6bc-8eb2-4b3b-9999-27b886c45cec",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
 	"variable": [
 		{
-			"id": "4c40e874-2121-46b5-aa99-21c4dc4c8312",
+			"id": "661489a6-da80-4e22-823f-d59a9889dc41",
 			"key": "baseUrl",
-			"value": "/",
+			"value": "https://localhost:7109",
 			"type": "string"
 		}
 	]
