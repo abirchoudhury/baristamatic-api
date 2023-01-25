@@ -25,14 +25,14 @@ namespace BaristamaticAPI.Services
 			}
 
 			var response = new OrderResponseModel();
-			//order placed, get the recipe for drink in order
-			DrinkRecipe recipe = GetRecipe(order.DrinkName);
+			//request good, get the recipe for drink in order
+			var recipe = DrinkRecipe.GetRecipe(order.DrinkName);
 			decimal totalCost = 0.00M;
 
 			//recipe found, loop thru ingredients
 			if (recipe != null && recipe.RecipeIngredients != null)
 			{
-				//if no ingredients then restore them. This should only happen the first time during app lifecycle
+				//if no ingredients then restore them. This should only happen once during app lifecycle
 				if (!_context.Ingredients.Any())
 				{
 					_context.RestoreIngredients();
@@ -63,7 +63,7 @@ namespace BaristamaticAPI.Services
 				response = new OrderResponseModel
 				{
 					Id = order.Id,
-					DrinkName = GetDrinkName(order.DrinkName),					
+					DrinkName = DrinkRecipe.GetDrinkName(order.DrinkName),					
 					Decaf = order.Decaf,
 					OrderTotal = totalCost,
 					OrderDate = DateTime.Now,
@@ -76,34 +76,7 @@ namespace BaristamaticAPI.Services
 			return response;
 		}
 
-		public string GetDrinkName(DrinkNames id)
-		{
-			string result = "";
-			switch (id)
-			{
-				case DrinkNames.Coffee:
-					result = "Coffee";
-					break;
-				case DrinkNames.DecafCoffee:
-					result = "Decaf Coffee";
-					break;
-				case DrinkNames.CaffeLatte:
-					result = "Caffe Latte";
-					break;
-				case DrinkNames.CaffeAmericano:
-					result = "Caffe Americano";
-					break;
-				case DrinkNames.CaffeMocha:
-					result = "Caffe Mocha";
-					break;
-				case DrinkNames.Cappuccino:
-					result = "Cappuccino";
-					break;
-				default:
-					break;
-			}
-			return result;
-		}
+		
 
 		public bool ValidateRequest(OrderRequestModel order)
 		{
@@ -114,137 +87,6 @@ namespace BaristamaticAPI.Services
 			return false;
 		}
 
-		/// <summary>
-		/// Determines the ingredients required for a drink. For demo purposes, this is being hard coded.		
-		/// </summary>
-		/// <param name="drinkID"></param>
-		/// <returns>The name and list of ingredients for the specified drink</returns>
-		public DrinkRecipe GetRecipe(DrinkNames drinkName)
-		{
-			var result = new DrinkRecipe
-			{
-				RecipeIngredients = new List<RecipeIngredient>()
-			};
-			switch (drinkName)
-			{
-				case DrinkNames.Coffee:
-					result.DrinkName = "Coffee";
-					result.RecipeIngredients?.AddRange(new List<RecipeIngredient>
-					{
-						new RecipeIngredient
-						{
-							IngredientName = "Coffee",
-							RequiredQuantity = 3
-						},
-						new RecipeIngredient
-						{
-							IngredientName = "Sugar",
-							RequiredQuantity = 1
-						},
-						new RecipeIngredient
-						{
-							IngredientName = "Cream",
-							RequiredQuantity = 1
-						}
-					});
-					break;
-				case DrinkNames.DecafCoffee:
-					result.DrinkName = "Decaf Coffee";
-					result.RecipeIngredients?.AddRange(new List<RecipeIngredient>
-					{
-						new RecipeIngredient
-						{
-							IngredientName = "Decaf Coffee",
-							RequiredQuantity = 3
-						},
-						new RecipeIngredient
-						{
-							IngredientName = "Sugar",
-							RequiredQuantity = 1
-						},
-						new RecipeIngredient
-						{
-							IngredientName = "Cream",
-							RequiredQuantity = 1
-						}
-					});
-					break;
-				case DrinkNames.CaffeLatte:
-					result.DrinkName = "Caffee Latte";
-					result.RecipeIngredients?.AddRange(new List<RecipeIngredient>
-					{
-						new RecipeIngredient
-						{
-							IngredientName = "Espresso",
-							RequiredQuantity = 2
-						},
-						new RecipeIngredient
-						{
-							IngredientName = "Steamed Milk",
-							RequiredQuantity = 1
-						}
-					});
-					break;
-				case DrinkNames.CaffeAmericano:
-					result.DrinkName = "Caffe Americano";
-					result.RecipeIngredients?.AddRange(new List<RecipeIngredient>
-					{
-						new RecipeIngredient
-						{
-							IngredientName = "Espresso",
-							RequiredQuantity = 3
-						}
-					});
-					break;
-				case DrinkNames.CaffeMocha:
-					result.DrinkName = "Caffe Mocha";
-					result.RecipeIngredients?.AddRange(new List<RecipeIngredient>
-					{
-						new RecipeIngredient
-						{
-							IngredientName = "Espresso",
-							RequiredQuantity = 1
-						},
-						new RecipeIngredient
-						{
-							IngredientName = "Cocoa",
-							RequiredQuantity = 1
-						},
-						new RecipeIngredient
-						{
-							IngredientName = "Steamed Milk",
-							RequiredQuantity = 1
-						},
-						new RecipeIngredient
-						{
-							IngredientName = "Whipped Cream",
-							RequiredQuantity = 1
-						}
-					});
-					break;
-				case DrinkNames.Cappuccino:
-					result.DrinkName = "Cappuccino";
-					result.RecipeIngredients?.AddRange(new List<RecipeIngredient>
-					{
-						new RecipeIngredient
-						{
-							IngredientName = "Espresso",
-							RequiredQuantity = 2
-						},
-						new RecipeIngredient
-						{
-							IngredientName = "Steamed Milk",
-							RequiredQuantity = 1
-						},
-						new RecipeIngredient
-						{
-							IngredientName = "Foamed Milk",
-							RequiredQuantity = 1
-						}
-					});
-					break;				
-			}
-			return result;
-		}
+		
 	}
 }

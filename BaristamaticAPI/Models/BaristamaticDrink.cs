@@ -1,4 +1,8 @@
-﻿namespace BaristamaticAPI.Models
+﻿using BaristamaticAPI.Services;
+
+using System.ComponentModel.DataAnnotations;
+
+namespace BaristamaticAPI.Models
 {
 	public class BaristamaticDrink
 	{
@@ -7,4 +11,6 @@
 		public string? Ingredients { get; set; }
 
 	}
+
+	
 }
