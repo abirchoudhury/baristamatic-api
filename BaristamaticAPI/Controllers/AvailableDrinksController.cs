@@ -37,7 +37,9 @@ namespace BaristamaticAPI.Controllers
 					IsAvailable = drink.IsAvailable.GetValueOrDefault(),
 					DrinkDetails = drink
 				});
-				drink.DrinkName = null; //remove duplicate occurance;			
+				//remove duplicate occurance;			
+				drink.DrinkName = null;
+				drink.IsAvailable = null;
 			}
 
 			var formatted = JsonConvert.SerializeObject(result, Formatting.Indented, new JsonSerializerSettings

@@ -1,5 +1,7 @@
 ﻿using BaristamaticAPI.Models;
 
+using Microsoft.EntityFrameworkCore;
+
 namespace BaristamaticAPI.Services
 {
 	public class DrinksMenuService : IDrinksMenuService
@@ -37,9 +39,11 @@ namespace BaristamaticAPI.Services
 			result.RecipeIngredients = recipe.RecipeIngredients;
 			result.AvailableIngredients = new List<RecipeIngredient>();
 
+
+			var availConditions = new List<bool>();
 			foreach (var ing in result.RecipeIngredients)
 			{
-				var currIng = _context.Ingredients.FirstOrDefault(a => a.IngredientName == ing.IngredientName);
+				var currIng = _context.Ingredients.ToListAsync().Result.FirstOrDefault(a => a.IngredientName == ing.IngredientName);
 				if (currIng != null)
 				{
 					result.AvailableIngredients.Add(
@@ -48,11 +52,12 @@ namespace BaristamaticAPI.Services
 							IngredientName = currIng.IngredientName,
 							RequiredQuantity = currIng.Quantity
 						});
-
-					result.IsAvailable = ing.RequiredQuantity <= currIng.Quantity;
+					
+					availConditions.Add(ing.RequiredQuantity <= currIng.Quantity);
 				}
-
 			}
+
+			result.IsAvailable = availConditions.TrueForAll(a => a == true);
 
 			return result;			
 
