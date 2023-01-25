@@ -1,0 +1,434 @@
+{
+	"info": {
+		"_postman_id": "f91caca0-dc9f-4f41-9974-72e9422cb18a",
+		"name": "BaristamaticAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "2430426-f91caca0-dc9f-4f41-9974-72e9422cb18a"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "DrinksOrder",
+					"item": [
+						{
+							"name": "/api/DrinksOrder/GetAllOrders",
+							"id": "1f882835-82fe-499d-8107-a2548972568d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/DrinksOrder/GetAllOrders",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"DrinksOrder",
+										"GetAllOrders"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "e519f069-ffe4-4bd2-888c-9402754ba856",
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/DrinksOrder/GetAllOrders",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"DrinksOrder",
+												"GetAllOrders"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"drinkName\": \"qui est amet fugi\",\n    \"decaf\": true,\n    \"orderTotal\": -86828280.7429952,\n    \"orderDateFormatted\": \"sed Ut\",\n    \"totalCostFormatted\": \"incididunt laboris dolor\",\n    \"utcOrderDate\": \"2012-01-17T02:12:33.456Z\"\n  },\n  {\n    \"drinkName\": \"veniam voluptate elit magna\",\n    \"decaf\": true,\n    \"orderTotal\": 81132073.49656463,\n    \"orderDateFormatted\": \"adipisicing Ut eu ad\",\n    \"totalCostFormatted\": \"quis adipisicing\",\n    \"utcOrderDate\": \"1996-06-13T09:13:14.723Z\"\n  }\n]"
+								}
+							]
+						},
+						{
+							"name": "/api/DrinksOrder/PlaceDrinksOrder",
+							"id": "2780a2e4-a49b-44c3-ad12-210f0ee9e3b9",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"drinkName\": \"CaffeLatte\",\n  \"decaf\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/DrinksOrder/PlaceDrinksOrder",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"DrinksOrder",
+										"PlaceDrinksOrder"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "5046e882-07bf-4684-95f8-05ca48ddf0d3",
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"drinkName\": \"CaffeLatte\",\n  \"decaf\": false\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/DrinksOrder/PlaceDrinksOrder",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"DrinksOrder",
+												"PlaceDrinksOrder"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"drinkName\": \"qui aliquip dolor\",\n  \"decaf\": true,\n  \"orderTotal\": 27847134.99930325,\n  \"orderDateFormatted\": \"ut aute magna\",\n  \"totalCostFormatted\": \"culpa sed\",\n  \"utcOrderDate\": \"1956-08-27T15:23:32.703Z\"\n}"
+								}
+							]
+						}
+					],
+					"id": "983fc35a-3fa1-4eb1-a928-c35a115dcf9a"
+				},
+				{
+					"name": "Ingredients",
+					"item": [
+						{
+							"name": "/api/Ingredients/GetCurrentStock",
+							"id": "bc3928cb-b8e2-4132-b457-4646128920f1",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/Ingredients/GetCurrentStock",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Ingredients",
+										"GetCurrentStock"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "bf541b03-f2fd-4111-9d71-7d5a681b1cc2",
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/Ingredients/GetCurrentStock",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Ingredients",
+												"GetCurrentStock"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"ingredientID\": 40049312,\n    \"ingredientName\": \"consequat ullamco\",\n    \"unitCost\": -12651239.128013715,\n    \"quantity\": 38600028\n  },\n  {\n    \"ingredientID\": -25018309,\n    \"ingredientName\": \"voluptate magna do Excepteur\",\n    \"unitCost\": 56189129.93807781,\n    \"quantity\": -48916175\n  }\n]"
+								}
+							]
+						},
+						{
+							"name": "/api/Ingredients/RestoreIngredients",
+							"id": "885650c1-91a3-412b-ae64-15a9b3694daa",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/Ingredients/RestoreIngredients",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Ingredients",
+										"RestoreIngredients"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "90ef99df-585a-4d11-8ac2-46e9a2365a21",
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Ingredients/RestoreIngredients",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Ingredients",
+												"RestoreIngredients"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					],
+					"id": "b0d2e229-a01c-49a3-a383-b4db1bc1088a"
+				},
+				{
+					"name": "/api/AvailableDrinks",
+					"id": "010f1842-fd2c-4052-a62d-8fca1e63fe6a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/plain"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/AvailableDrinks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"AvailableDrinks"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "6f1813a5-71d5-4851-a811-c08ec73bbc24",
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/AvailableDrinks",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"AvailableDrinks"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "\"veniam sit aliquip laboris\""
+						}
+					]
+				},
+				{
+					"name": "/api/BaristamaticMenu/GetDrinksMenu",
+					"id": "b4cd11c3-429f-4bcb-9657-7a30ef9efb5a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/plain"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/BaristamaticMenu/GetDrinksMenu",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"BaristamaticMenu",
+								"GetDrinksMenu"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "466b9c09-01f4-429c-a178-aec7c72d60a4",
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/BaristamaticMenu/GetDrinksMenu",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"BaristamaticMenu",
+										"GetDrinksMenu"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"id\": -69487340,\n    \"drinkName\": \"in\",\n    \"ingredients\": \"occaecat\"\n  },\n  {\n    \"id\": -81049303,\n    \"drinkName\": \"nostrud et\",\n    \"ingredients\": \"aliquip elit\"\n  }\n]"
+						}
+					]
+				}
+			],
+			"id": "ff1d67a2-fead-4129-b094-6df52ae275e2"
+		}
+	],
+	"variable": [
+		{
+			"id": "4c40e874-2121-46b5-aa99-21c4dc4c8312",
+			"key": "baseUrl",
+			"value": "/",
+			"type": "string"
+		}
+	]
+}
